@@ -9,7 +9,6 @@ import java.lang.Object;
  */
 public class ConnectN {
 
-    // All static variables
     public static final int MAX_HEIGHT = 16;
     public static final int MAX_WIDTH = 16;
     public static final int MIN_HEIGH = 4;
@@ -18,7 +17,6 @@ public class ConnectN {
     public String title;
 
 
-    // Non-static variables
     private int height;
     private int width;
     private int n;
