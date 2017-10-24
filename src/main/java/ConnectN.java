@@ -33,6 +33,8 @@ public class ConnectN {
 
     /**
      * A new ConnectN board with dimensions and N copied from another board.
+     *
+     * @param otherBoard The board in which we are copying
      */
     public ConnectN(ConnectN otherBoard) {
         this.height = otherBoard.getHeight();
@@ -41,6 +43,9 @@ public class ConnectN {
     }
     /**
      * A new ConnectN board with given width and height and an uninitialized N value.
+     *
+     * @param setHeight the height of the ConnectN board
+     * @param setWidth the width of the ConnectN board
      */
     public ConnectN(int setHeight, int setWidth) {
         height = setHeight;
@@ -48,6 +53,10 @@ public class ConnectN {
     }
     /**
      * A new ConnectN board with given width, height and N value.
+     *
+     * @param setHeight the height of the ConnectN board
+     * @param setWidth the width of the ConnectN board
+     * @param setN the number of spots in a row needed to win
      */
     public ConnectN(int setHeight, int setWidth, int setN) {
         height = setHeight;
