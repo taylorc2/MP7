@@ -54,7 +54,7 @@ public class ConnectN {
      *
      * @param otherBoard The board in which we are copying
      */
-    public ConnectN(ConnectN otherBoard) {
+    public ConnectN(final ConnectN otherBoard) {
         this.height = otherBoard.getHeight();
         this.width = otherBoard.getWidth();
         this.n = otherBoard.getN();
@@ -66,7 +66,7 @@ public class ConnectN {
      * @param setHeight the height of the ConnectN board
      * @param setWidth the width of the ConnectN board
      */
-    public ConnectN(int setHeight, int setWidth) {
+    public ConnectN(final int setHeight, final int setWidth) {
         height = setHeight;
         width = setWidth;
         totalGames++;
@@ -78,7 +78,7 @@ public class ConnectN {
      * @param setWidth the width of the ConnectN board
      * @param setN the number of spots in a row needed to win
      */
-    public ConnectN(int setHeight, int setWidth, int setN) {
+    public ConnectN(final int setHeight, final int setWidth, final int setN) {
         height = setHeight;
         width = setWidth;
         n = setN;
@@ -87,7 +87,7 @@ public class ConnectN {
 
 
     /**
-     * Get the current board height
+     * Get the current board height.
      *
      * @return the height of the board
      */
@@ -95,7 +95,7 @@ public class ConnectN {
         return height;
     }
     /**
-     * Get the current board width
+     * Get the current board width.
      *
      * @return the current width of the board
      */
@@ -103,7 +103,7 @@ public class ConnectN {
         return width;
     }
     /**
-     * Get the current N value
+     * Get the current N value.
      *
      * @return the current N value
      */
@@ -115,10 +115,10 @@ public class ConnectN {
     /**
      * Attempts to set the current board height
      *
-     * @param newheight the attempted new height of the board
+     * @param newheight the attempted new height of the board.
      * @return true if the height has been reset to newHeight
      */
-    public boolean setHeight(int newHeight) {
+    public boolean setHeight(final int newHeight) {
         if (MIN_HEIGHT < newHeight && newHeight < MAX_HEIGHT && newHeight >= 1 + n) {
             height = newHeight;
             return true;
@@ -127,12 +127,12 @@ public class ConnectN {
         }
     }
     /**
-     * Attempts to set the current board width
+     * Attempts to set the current board width.
      *
      * @param newWidth the new width of the board
      * @return true if the width has been reset to newWidth
      */
-    public boolean setWidth(int newWidth) {
+    public boolean setWidth(final int newWidth) {
         if (MIN_WIDTH < newWidth && newWidth < MAX_WIDTH && newWidth >= 1 + n) {
             width = newWidth;
             return true;
@@ -141,16 +141,17 @@ public class ConnectN {
         }
     }
     /**
-     * Attempts to set the current N value for the board
+     * Attempts to set the current N value for the board.
      *
      * @param newN the new N value for the board
      * @return true if N has been reset for the board
      */
-    public boolean setN(int newN) {
+    public boolean setN(final int newN) {
         n = newN;
+        return false;
     }
     /**
-     * Gets the total number of games
+     * Gets the total number of games.
      *
      * @return Returns the total number of games
      */
