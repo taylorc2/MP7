@@ -32,6 +32,7 @@ public class ConnectN {
     /**
      * Public game title.
      */
+    @SuppressWarnings(“checkstyle:visibilitymodifier”);
     public String title;
 
 
@@ -46,7 +47,6 @@ public class ConnectN {
      * A new ConnectN board with uninitialized width, height, and N value.
      */
     public ConnectN() {
-        totalGames++;
     }
 
     /**
@@ -58,7 +58,6 @@ public class ConnectN {
         this.height = otherBoard.getHeight();
         this.width = otherBoard.getWidth();
         this.n = otherBoard.getN();
-        totalGames++;
     }
     /**
      * A new ConnectN board with given width and height and an uninitialized N value.
@@ -66,10 +65,9 @@ public class ConnectN {
      * @param setHeight the height of the ConnectN board
      * @param setWidth the width of the ConnectN board
      */
-    public ConnectN(final int setHeight, final int setWidth) {
+    public ConnectN(final int setWidth, final int setHeight) {
         height = setHeight;
         width = setWidth;
-        totalGames++;
     }
     /**
      * A new ConnectN board with given width, height and N value.
@@ -78,11 +76,10 @@ public class ConnectN {
      * @param setWidth the width of the ConnectN board
      * @param setN the number of spots in a row needed to win
      */
-    public ConnectN(final int setHeight, final int setWidth, final int setN) {
+    public ConnectN(final int setWidth, final int setHeight, final int setN) {
         height = setHeight;
         width = setWidth;
         n = setN;
-        totalGames++;
     }
 
 
@@ -119,8 +116,11 @@ public class ConnectN {
      * @return true if the height has been reset to newHeight
      */
     public boolean setHeight(final int newHeight) {
-        if (MIN_HEIGHT < newHeight && newHeight < MAX_HEIGHT && newHeight >= 1 + n) {
+        if (MIN_HEIGHT < newHeight && newHeight < MAX_HEIGHT) {
             height = newHeight;
+            if (height < n + 1) {
+                n = 0;
+            }
             return true;
         } else {
             return false;
@@ -133,8 +133,11 @@ public class ConnectN {
      * @return true if the width has been reset to newWidth
      */
     public boolean setWidth(final int newWidth) {
-        if (MIN_WIDTH < newWidth && newWidth < MAX_WIDTH && newWidth >= 1 + n) {
+        if (MIN_WIDTH < newWidth && newWidth < MAX_WIDTH) {
             width = newWidth;
+            if (width < n +1) {
+                n = 0;
+            }
             return true;
         } else {
             return false;
@@ -157,6 +160,43 @@ public class ConnectN {
      */
     public static int getTotalGames() {
         return totalGames;
+    }
+
+
+    /**
+     * Creates a new ConnectN board
+     *
+     * @param width the width of the new ConnectN board
+     * @param height the height of the new ConnectN board
+     * @param n the value of n for the new ConnectN board
+     */
+    public static ConnectN create(final int width, final int height, final int n) {
+        if (width < MIN_WIDTH || width > MAX_WIDTH) {
+            return null;
+        } else if (height < MIN_HEIGHT || height > MAX_HEIGHT) {
+            return null;
+        } else if (n < MIN_N) {
+            return null;
+        } else {
+            ConnectN newBoard = new ConnectN(width, height, n);
+            return newBoard;
+        }
+    }
+
+    public static ConnectN[] createMany(final int number, final int width,
+            final int height, final int n) {
+        ConnectN r = new ConnectN(width, height, n);
+        if (number < 0) {
+            return null;
+        } else if (r == null) {
+            return null;
+        } else {
+            ConnectN[] arrayBoards = new ConnectN[number];
+            for (int i = 0; i < number; i++) {
+                arrayBoards[i] = r;
+            }
+            return arrayBoards;
+        }
     }
 
 
