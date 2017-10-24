@@ -113,9 +113,9 @@ public class ConnectN {
 
 
     /**
-     * Attempts to set the current board height
+     * Attempts to set the current board height.
      *
-     * @param newheight the attempted new height of the board.
+     * @param newHeight the attempted new height of the board.
      * @return true if the height has been reset to newHeight
      */
     public boolean setHeight(final int newHeight) {
