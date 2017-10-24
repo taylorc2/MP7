@@ -9,11 +9,27 @@ import java.lang.Object;
  */
 public class ConnectN {
 
+    /**
+     * Maximum height for board.
+     */
     public static final int MAX_HEIGHT = 16;
+    /**
+     * Maximum width for board.
+     */
     public static final int MAX_WIDTH = 16;
-    public static final int MIN_HEIGH = 4;
+    /**
+     * Minimum height for board.
+     */
+    public static final int MIN_HEIGHT = 4;
+    /**
+     * Minimum width for board.
+     */
     public static final int MIN_WIDTH = 4;
+    /**
+     * Minimum N value.
+     */
     public static final int MIN_N = 4;
+
     public String title;
 
 
