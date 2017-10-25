@@ -9,6 +9,8 @@ import java.lang.Object;
  */
 public class ConnectN {
 
+    /** Class variable that we used to generate a unique ID for each newly created board. */
+    private static int globalID = 0;
     /**
      * Maximum height for board.
      */
@@ -32,7 +34,6 @@ public class ConnectN {
     /**
      * Public game title.
      */
-    @SuppressWarnings(“checkstyle:visibilitymodifier”);
     public String title;
 
 
@@ -47,6 +48,7 @@ public class ConnectN {
      * A new ConnectN board with uninitialized width, height, and N value.
      */
     public ConnectN() {
+        id = ConnectN.globalID++;
     }
 
     /**
@@ -58,6 +60,7 @@ public class ConnectN {
         this.height = otherBoard.getHeight();
         this.width = otherBoard.getWidth();
         this.n = otherBoard.getN();
+        id = ConnectN.globalID++;
     }
     /**
      * A new ConnectN board with given width and height and an uninitialized N value.
@@ -68,6 +71,7 @@ public class ConnectN {
     public ConnectN(final int setWidth, final int setHeight) {
         height = setHeight;
         width = setWidth;
+        id = ConnectN.globalID++;
     }
     /**
      * A new ConnectN board with given width, height and N value.
@@ -80,6 +84,7 @@ public class ConnectN {
         height = setHeight;
         width = setWidth;
         n = setN;
+        id = ConnectN.globalID++;
     }
 
 
@@ -135,7 +140,7 @@ public class ConnectN {
     public boolean setWidth(final int newWidth) {
         if (MIN_WIDTH < newWidth && newWidth < MAX_WIDTH) {
             width = newWidth;
-            if (width < n +1) {
+            if (width < n + 1) {
                 n = 0;
             }
             return true;
@@ -164,11 +169,12 @@ public class ConnectN {
 
 
     /**
-     * Creates a new ConnectN board
+     * Creates a new ConnectN board.
      *
      * @param width the width of the new ConnectN board
      * @param height the height of the new ConnectN board
      * @param n the value of n for the new ConnectN board
+     * @return the new ConnectN board or null
      */
     public static ConnectN create(final int width, final int height, final int n) {
         if (width < MIN_WIDTH || width > MAX_WIDTH) {
@@ -182,22 +188,53 @@ public class ConnectN {
             return newBoard;
         }
     }
-
+    /**
+     * Creates an array of ConnectN boards.
+     *
+     * @param number number of ConnectN boards in the array
+     * @param width the width of the ConnectN boards
+     * @param height the height of the ConnectN boards
+     * @param n the n value of the ConnectN boards
+     * @return an array of ConnectN boards
+     */
     public static ConnectN[] createMany(final int number, final int width,
             final int height, final int n) {
-        ConnectN r = new ConnectN(width, height, n);
-        if (number < 0) {
-            return null;
-        } else if (r == null) {
+        if (number <= 0) {
             return null;
         } else {
             ConnectN[] arrayBoards = new ConnectN[number];
             for (int i = 0; i < number; i++) {
-                arrayBoards[i] = r;
+                arrayBoards[i] = new ConnectN(width, height, n);
             }
             return arrayBoards;
         }
     }
+
+
+    /**
+     * Sets the board at a specific position.
+     *
+     * @param player the player attempting the move
+     * @param setX the X coordinate that they are trying to place a tile at
+     * @param setY the Y coordinate that they are trying to place a tile at
+     * @return true if the move succeeds, false if error
+     */
+    public boolean setBoardAt(Player player, int setX, int setY) {
+        return null;
+    }
+
+    /** Unique id of a ConnectN board. */
+    private int id;
+
+    /**
+     * Gets the current board's id.
+     *
+     * @return the current board's id
+     */
+    public int getID() {
+        return id;
+    }
+
 
 
 
