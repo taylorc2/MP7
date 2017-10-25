@@ -220,6 +220,19 @@ public class ConnectN {
      * @return true if the move succeeds, false if error
      */
     public boolean setBoardAt(Player player, int setX, int setY) {
+        Player[][] temp = this.getBoard();
+        temp[setX][setY] = player;
+        return null;
+    }
+
+    /**
+     * Drops a tile in a particular column.
+     *
+     * @param player the player attempting to move
+     * @param setX the X coordinate that the player is trying to place a tile at
+     * @return
+     */
+    public boolean setBoardAt(Player player, int setX) {
         return null;
     }
 
@@ -235,7 +248,68 @@ public class ConnectN {
         return id;
     }
 
+    /**
+     * Return a copy of the board.
+     * Once the width and height are set, this function should not return null.
+     * Until then, it should return null.
+     *
+     * @return a copy of the board
+     */
+    public Player[][] getBoard() {
+        if (this.getHeight() > 0 && this.getWidth() > 0) {
+            Player[][] hold = new Player[this.getHeight()][this.getWidth()];
+            for (int i = 0; i < this.getHeight(); i++) {
+                for (int k = 0; k < this.getWidth(); k++) {
+                    hold[i][k] = new Player("blank");
+                }
+            }
+            return hold;
+        } else {
+            return null;
+        }
+    }
 
+    /**
+     * Get the player at a specific board position.
+     *
+     * @param getX the X coordinate to get the player at
+     * @param getY the Y coordinate to get the player at
+     * @return the player whose at the position
+     */
+    public Player getBoard(int getX, int getY) {
+        return null;
+    }
+
+    /**
+     * Return the winner of the game, or null if the game has not ended.
+     *
+     * @return the winner of the game
+     */
+    public Player getWinner() {
+        return null;
+    }
+
+
+    /**
+     * Compares two ConnectN boards.
+     *
+     * @param firstBoard the first ConnectN board to compare
+     * @param secondBoard the second ConnectN board to compare
+     * @return true if both the boards are the same
+     */
+    public static boolean compareBoards(ConnectN firstBoard, ConnectN secondBoard) {
+        return null;
+    }
+
+    /**
+     * Compares any number of ConnectN boards.
+     *
+     * @param boards the array of ConnectN boards to compare
+     * @return true if all passed boards are the same
+     */
+    public static boolean compareBoards(ConnectN...boards) {
+        return null;
+    }
 
 
 }
