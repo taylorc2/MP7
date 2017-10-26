@@ -22,11 +22,11 @@ public class ConnectN {
     /**
      * Minimum height for board.
      */
-    public static final int MIN_HEIGHT = 4;
+    public static final int MIN_HEIGHT = 6;
     /**
      * Minimum width for board.
      */
-    public static final int MIN_WIDTH = 4;
+    public static final int MIN_WIDTH = 6;
     /**
      * Minimum N value.
      */
@@ -36,11 +36,12 @@ public class ConnectN {
      */
     public String title;
 
-
+    private int id;
     private int height;
     private int width;
     private int n;
-    private static int totalGames;
+    private static int totalGames = 0;
+    private Player[][] board;
 
 
     // All 4 types of constructors
@@ -48,7 +49,8 @@ public class ConnectN {
      * A new ConnectN board with uninitialized width, height, and N value.
      */
     public ConnectN() {
-        id = ConnectN.globalID++;
+        id = totalGames;
+        totalGames++;
     }
 
     /**
@@ -60,7 +62,9 @@ public class ConnectN {
         this.height = otherBoard.getHeight();
         this.width = otherBoard.getWidth();
         this.n = otherBoard.getN();
-        id = ConnectN.globalID++;
+        id = totalGames;
+        totalGames++;
+        board = new Player[width][height];
     }
     /**
      * A new ConnectN board with given width and height and an uninitialized N value.
@@ -69,9 +73,19 @@ public class ConnectN {
      * @param setWidth the width of the ConnectN board
      */
     public ConnectN(final int setWidth, final int setHeight) {
-        height = setHeight;
-        width = setWidth;
-        id = ConnectN.globalID++;
+        if (MIN_WIDTH <= setWidth && setWidth <= MAX_WIDTH) {
+            width = setWidth;
+        } else {
+            width = 0;
+        }
+        if (MIN_HEIGHT <= setHeight && setHeight <= MAX_HEIGHT) {
+            height = setHeight;
+        } else {
+            height = 0;
+        }
+        id = totalGames;
+        totalGames++;
+        board = new Player[width][height];
     }
     /**
      * A new ConnectN board with given width, height and N value.
@@ -81,10 +95,28 @@ public class ConnectN {
      * @param setN the number of spots in a row needed to win
      */
     public ConnectN(final int setWidth, final int setHeight, final int setN) {
-        height = setHeight;
-        width = setWidth;
-        n = setN;
-        id = ConnectN.globalID++;
+        if (MIN_WIDTH <= setWidth && setWidth <= MAX_WIDTH) {
+            width = setWidth;
+        } else {
+            width = 0;
+        }
+        if (MIN_HEIGHT <= setHeight && setHeight <= MAX_HEIGHT) {
+            height = setHeight;
+        } else {
+            height = 0;
+        }
+        int max = height;
+        if (width > height) {
+            max = width;
+        }
+        if (setN >= MIN_N && setN < max && width != 0 && height != 0) {
+            n = setN;
+        } else {
+            n = 0;
+        }
+        id = totalGames;
+        totalGames++;
+        board = new Player[width][height];
     }
 
 
@@ -121,9 +153,14 @@ public class ConnectN {
      * @return true if the height has been reset to newHeight
      */
     public boolean setHeight(final int newHeight) {
-        if (MIN_HEIGHT < newHeight && newHeight < MAX_HEIGHT) {
+        if (MIN_HEIGHT <= newHeight && newHeight <= MAX_HEIGHT && !gameStarted()) {
             height = newHeight;
-            if (height < n + 1) {
+            board = new Player[width][height];
+            int max = height;
+            if (width > height) {
+                max = width;
+            }
+            if (max <= n) {
                 n = 0;
             }
             return true;
@@ -138,9 +175,14 @@ public class ConnectN {
      * @return true if the width has been reset to newWidth
      */
     public boolean setWidth(final int newWidth) {
-        if (MIN_WIDTH < newWidth && newWidth < MAX_WIDTH) {
+        if (MIN_WIDTH <= newWidth && newWidth <= MAX_WIDTH && !gameStarted()) {
             width = newWidth;
-            if (width < n + 1) {
+            board = new Player[width][height];
+            int max = height;
+            if (width > height) {
+                max = width;
+            }
+            if (max <= n) {
                 n = 0;
             }
             return true;
@@ -154,9 +196,18 @@ public class ConnectN {
      * @param newN the new N value for the board
      * @return true if N has been reset for the board
      */
+
     public boolean setN(final int newN) {
-        n = newN;
-        return false;
+        int max = height;
+        if (width > height) {
+            max = width;
+        }
+        if (!gameStarted() && width != 0 && height != 0 && newN >= MIN_N && newN < max) {
+            n = newN;
+            return true;
+        } else {
+            return false;
+        }
     }
     /**
      * Gets the total number of games.
@@ -220,9 +271,11 @@ public class ConnectN {
      * @return true if the move succeeds, false if error
      */
     public boolean setBoardAt(final Player player, final int setX, final int setY) {
-        Player[][] temp = this.getBoard();
-        temp[setX][setY] = player;
-        return null;
+        if (board[setX][setY] != null) {
+            board[setX][setY] = player;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -230,14 +283,20 @@ public class ConnectN {
      *
      * @param player the player attempting to move
      * @param setX the X coordinate that the player is trying to place a tile at
-     * @return
+     * @return true if the move succeeds, false if error
      */
     public boolean setBoardAt(final Player player, final int setX) {
-        return null;
+        int nextY;
+        for (int i = 0; i < height; i++) {
+            if (board[setX][i] != null) {
+                nextY = i + 1;
+                board[setX][nextY] = player;
+                return true;
+            }
+        }
+        return false;
     }
 
-    /** Unique id of a ConnectN board. */
-    private int id;
 
     /**
      * Gets the current board's id.
@@ -331,5 +390,23 @@ public class ConnectN {
     public boolean equals(final java.lang.Object obj) {
         return null;
     }
+
+    /**
+     * Determines whether the game has started or not.
+     *
+     * @return true if the game has started
+     */
+    public boolean gameStarted() {
+        boolean flag = false;
+        for (int k = 0; k < height; k++) {
+        for (int i = 0; i < width; i++) {
+            if (board[i][k] != null) {
+                flag = true;
+            }
+        }
+        }
+        return flag;
+    }
+
 
 }
