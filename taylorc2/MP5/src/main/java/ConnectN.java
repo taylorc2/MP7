@@ -219,7 +219,7 @@ public class ConnectN {
      * @param setY the Y coordinate that they are trying to place a tile at
      * @return true if the move succeeds, false if error
      */
-    public boolean setBoardAt(Player player, int setX, int setY) {
+    public boolean setBoardAt(final Player player, final int setX, final int setY) {
         Player[][] temp = this.getBoard();
         temp[setX][setY] = player;
         return null;
@@ -232,7 +232,7 @@ public class ConnectN {
      * @param setX the X coordinate that the player is trying to place a tile at
      * @return
      */
-    public boolean setBoardAt(Player player, int setX) {
+    public boolean setBoardAt(final Player player, final int setX) {
         return null;
     }
 
@@ -276,7 +276,7 @@ public class ConnectN {
      * @param getY the Y coordinate to get the player at
      * @return the player whose at the position
      */
-    public Player getBoard(int getX, int getY) {
+    public Player getBoardAt(final int getX, final int getY) {
         return null;
     }
 
@@ -297,7 +297,7 @@ public class ConnectN {
      * @param secondBoard the second ConnectN board to compare
      * @return true if both the boards are the same
      */
-    public static boolean compareBoards(ConnectN firstBoard, ConnectN secondBoard) {
+    public static boolean compareBoards(final ConnectN firstBoard, final ConnectN secondBoard) {
         return null;
     }
 
@@ -307,9 +307,29 @@ public class ConnectN {
      * @param boards the array of ConnectN boards to compare
      * @return true if all passed boards are the same
      */
-    public static boolean compareBoards(ConnectN...boards) {
+    public static boolean compareBoards(final ConnectN...boards) {
         return null;
     }
 
+
+    /**
+     * Defines the hash code for the ConnectN class.
+     *
+     * @return an int
+     */
+    public final int hashCode() {
+        return null;
+    }
+
+
+    /**
+     * Defines equality for the ConnectN class.
+     *
+     *@param obj no clue
+     * @return true if two ConnectN boards are equal
+     */
+    public boolean equals(final java.lang.Object obj) {
+        return null;
+    }
 
 }
