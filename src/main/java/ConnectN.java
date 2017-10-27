@@ -384,7 +384,41 @@ public class ConnectN {
      * @return the winner of the game
      */
     public Player getWinner() {
+        int streak = 0;
+        Player turn = null;
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Player p1 = board[x][y];
+                if (p1 == turn) {
+                    streak++;
+                } else {
+                    streak = 1;
+                    turn = p1;
+                }
+                if (streak == n) {
+                    return turn;
+                }
+            }
+        }
+        streak = 0;
+        turn = null;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                Player p1 = board[x][y];
+                if (p1 == turn) {
+                    streak++;
+                } else {
+                    streak = 1;
+                    turn = p1;
+                }
+                if (streak == n) {
+                    return turn;
+                }
+            }
+        }
+
         return null;
+
     }
 
 
