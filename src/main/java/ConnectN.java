@@ -271,9 +271,20 @@ public class ConnectN {
      * @return true if the move succeeds, false if error
      */
     public boolean setBoardAt(final Player player, final int setX, final int setY) {
-        if (board[setX][setY] != null) {
-            board[setX][setY] = player;
-            return true;
+        int nextY = -1;
+        if (0 <= setX && setX < width && 0 <= setY && setY < height && board[setX][setY] == null) {
+            for (int i = 0; i < height; i++) {
+                if (board[setX][i] != null) {
+                    nextY = i + 1;
+                }
+            }
+            if (nextY == -1 && board[setX][0] == null) {
+                nextY = 0;
+            }
+            if (nextY == setY) {
+                board[setX][setY] = player;
+                return true;
+            }
         }
         return false;
     }
@@ -287,14 +298,18 @@ public class ConnectN {
      */
     public boolean setBoardAt(final Player player, final int setX) {
         int nextY;
-        for (int i = 0; i < height; i++) {
-            if (board[setX][i] != null) {
-                nextY = i + 1;
-                board[setX][nextY] = player;
-                return true;
+        if (0 <= setX && setX < width) {
+            for (int i = 0; i < height; i++) {
+                if (board[setX][i] == null) {
+                    nextY = i;
+                    board[setX][nextY] = player;
+                    return true;
+                }
             }
+            return false;
         }
         return false;
+
     }
 
 
@@ -315,14 +330,17 @@ public class ConnectN {
      * @return a copy of the board
      */
     public Player[][] getBoard() {
-        if (this.getHeight() > 0 && this.getWidth() > 0) {
-            Player[][] hold = new Player[this.getHeight()][this.getWidth()];
-            for (int i = 0; i < this.getHeight(); i++) {
-                for (int k = 0; k < this.getWidth(); k++) {
-                    hold[i][k] = new Player("blank");
+        if (width != 0 && height != 0) {
+            Player[][] update = new Player[width][height];
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    if (board[x][y] == null) {
+                        continue;
+                    }
+                    update[x][y] = new Player(board[x][y]);
                 }
             }
-            return hold;
+            return update;
         } else {
             return null;
         }
@@ -336,7 +354,11 @@ public class ConnectN {
      * @return the player whose at the position
      */
     public Player getBoardAt(final int getX, final int getY) {
-        return null;
+        if (0 <= getX && getX < width && 0 <= getY && getY < height) {
+            return board[getX][getY];
+        } else {
+            return null;
+        }
     }
 
     /**
