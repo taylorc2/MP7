@@ -1,4 +1,4 @@
-import java.lang.Object;
+//import java.lang.Object;
 
 /**
  * A class that implements like a Connect4 game.
@@ -9,8 +9,6 @@ import java.lang.Object;
  */
 public class ConnectN {
 
-    /** Class variable that we used to generate a unique ID for each newly created board. */
-    private static int globalID = 0;
     /**
      * Maximum height for board.
      */
@@ -34,13 +32,32 @@ public class ConnectN {
     /**
      * Public game title.
      */
+    @SuppressWarnings("checkstyle:visibilitymodifier")
     public String title;
 
+    /**
+     * Unique id for each ConnectN game.
+     */
     private int id;
+    /**
+     * The height of the ConnectN board.
+     */
     private int height;
+    /**
+     * The width of the ConnectN board.
+     */
     private int width;
+    /**
+     * The N value for the ConnectN game.
+     */
     private int n;
+    /**
+     * The total number of ConnectN games.
+     */
     private static int totalGames = 0;
+    /**
+     * The 2D array board for a ConnectN game.
+     */
     private Player[][] board;
 
 
