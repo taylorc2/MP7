@@ -60,6 +60,7 @@ public class ConnectN {
      */
     private Player[][] board;
 
+    private String winner;
 
     // All 4 types of constructors
     /**
