@@ -1,4 +1,4 @@
-//import java.lang.Object;
+
 
 /**
  * A class that implements like a Connect4 game.
@@ -289,6 +289,9 @@ public class ConnectN {
      */
     public boolean setBoardAt(final Player player, final int setX, final int setY) {
         int nextY = -1;
+        if (gameEnded()) {
+            return false;
+        }
         if (0 <= setX && setX < width && 0 <= setY && setY < height && board[setX][setY] == null) {
             for (int i = 0; i < height; i++) {
                 if (board[setX][i] != null) {
@@ -315,6 +318,9 @@ public class ConnectN {
      */
     public boolean setBoardAt(final Player player, final int setX) {
         int nextY;
+        if (gameEnded()) {
+            return false;
+        }
         if (0 <= setX && setX < width) {
             for (int i = 0; i < height; i++) {
                 if (board[setX][i] == null) {
@@ -384,26 +390,25 @@ public class ConnectN {
      * @return the winner of the game
      */
     public Player getWinner() {
-       if(!gameStarted()) {
-           return null;
-       } else {
-           int streak = 0;
-           Player lastPlayer;
-           for
-       }
 
-        /*if (gameStarted()) {
+        if (gameStarted()) {
             int streak = 0;
-            Player lastPlayer;
+            String lastPlayer = "";
+            String p1;
             for (int x = 0; x < width; x++) {
                 streak = 0;
-                lastPlayer = board[x][0];
-                for (int y = 1; y < height; y++) {
-                    Player p1 = board[x][y];
+                lastPlayer = "";
+                for (int y = 0; y < height; y++) {
+                    if (board[x][y] == null) {
+                        continue;
+                    } else {
+                    p1 = (board[x][y]).getName();
+                    }
                     if (p1.equals(lastPlayer)) {
                         streak++;
-                        if (streak == this.n) {
-                            return lastPlayer;
+                        if (streak == n) {
+                            board[x][y].addScore();
+                            return board[x][y];
                         }
                     } else {
                         streak = 1;
@@ -414,25 +419,29 @@ public class ConnectN {
             }
             for (int y = 0; y < height; y++) {
                 streak = 0;
-                lastPlayer = null;
+                lastPlayer = "";
                 for (int x = 0; x < width; x++) {
-                    Player currentPlayer = board[x][y];
-                    if (currentPlayer.equals(lastPlayer)) {
+                    if (board[x][y] == null) {
+                        continue;
+                    } else {
+                    p1 = (board[x][y]).getName();
+                    }
+                    if (p1.equals(lastPlayer)) {
                         streak++;
                         if (streak == this.n) {
-                            return lastPlayer;
+                            board[x][y].addScore();
+                            return board[x][y];
                         }
                     } else {
                         streak = 1;
-                        lastPlayer = currentPlayer;
+                        lastPlayer = p1;
                     }
                 }
             }
-
         return null;
         }
         return null;
-        */
+
     }
 
 
@@ -494,6 +503,24 @@ public class ConnectN {
         }
         return flag;
     }
-
+/**
+ * Determines whether the game is over or not.
+ *
+ * @return true if the game is over
+ */
+    public boolean gameEnded() {
+        if (getWinner() != null) {
+            return true;
+        } else {
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    if (board[x][y] == null) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    }
 
 }
