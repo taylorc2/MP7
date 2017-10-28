@@ -384,7 +384,15 @@ public class ConnectN {
      * @return the winner of the game
      */
     public Player getWinner() {
-        if (gameStarted()) {
+       if(!gameStarted()) {
+           return null;
+       } else {
+           int streak = 0;
+           Player lastPlayer;
+           for
+       }
+
+        /*if (gameStarted()) {
             int streak = 0;
             Player lastPlayer;
             for (int x = 0; x < width; x++) {
@@ -424,6 +432,7 @@ public class ConnectN {
         return null;
         }
         return null;
+        */
     }
 
 
@@ -477,11 +486,11 @@ public class ConnectN {
     public boolean gameStarted() {
         boolean flag = false;
         for (int k = 0; k < height; k++) {
-        for (int i = 0; i < width; i++) {
-            if (board[i][k] != null) {
-                flag = true;
+            for (int i = 0; i < width; i++) {
+                if (board[i][k] != null) {
+                    flag = true;
+                }
             }
-        }
         }
         return flag;
     }
