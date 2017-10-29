@@ -575,7 +575,7 @@ public class ConnectN {
  * @return true if the game is over
  */
     public boolean gameEnded() {
-        if (getWinner() != null) {
+        if (hasWinner() == true) {
             return true;
         } else {
             for (int y = 0; y < height; y++) {
@@ -587,6 +587,63 @@ public class ConnectN {
             }
             return true;
         }
+    }
+/**
+ * Determines whether the ConnectN game has a winner or not.
+ *
+ * @return true if there is a winner, false if not
+ */
+    public boolean hasWinner() {
+
+        if (gameStarted()) {
+            int streak = 0;
+            String lastPlayer = "";
+            String p1;
+            for (int x = 0; x < width; x++) {
+                streak = 0;
+                lastPlayer = "";
+                for (int y = 0; y < height; y++) {
+                    if (board[x][y] == null) {
+                        continue;
+                    } else {
+                    p1 = (board[x][y]).getName();
+                    }
+                    if (p1.equals(lastPlayer)) {
+                        streak++;
+                        if (streak == n) {
+                            return true;
+                        }
+                    } else {
+                        streak = 1;
+                        lastPlayer = p1;
+                    }
+
+                }
+            }
+            for (int y = 0; y < height; y++) {
+                streak = 0;
+                lastPlayer = "";
+                for (int x = 0; x < width; x++) {
+                    if (board[x][y] == null) {
+                        continue;
+                    } else {
+                    p1 = (board[x][y]).getName();
+                    }
+                    if (p1.equals(lastPlayer)) {
+                        streak++;
+                        if (streak == this.n) {
+                            return true;
+                        }
+                    } else {
+                        streak = 1;
+                        lastPlayer = p1;
+                    }
+                }
+            }
+        return false;
+        }
+        return false;
+
     }
 
 }
