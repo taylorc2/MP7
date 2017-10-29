@@ -60,7 +60,6 @@ public class ConnectN {
      */
     private Player[][] board;
 
-    private String winner;
 
     // All 4 types of constructors
     /**
@@ -458,7 +457,9 @@ public class ConnectN {
      * @return true if both the boards are the same
      */
     public static boolean compareBoards(final ConnectN firstBoard, final ConnectN secondBoard) {
-
+        if (firstBoard == null || secondBoard == null) {
+            return false;
+        }
         if (firstBoard.width != secondBoard.width || firstBoard.height != secondBoard.height) {
             return false;
         }
@@ -469,7 +470,11 @@ public class ConnectN {
             for (int x = 0; x < firstBoard.width; x++) {
                 Player first = firstBoard.board[x][y];
                 Player second = secondBoard.board[x][y];
-                if (!first.Player.equals(second)) {
+                if (first == null && second == null) {
+                    continue;
+                } else if (first == null || second == null) {
+                    return false;
+                } else if (!first.equals(second)) {
                     return false;
                 }
             }
@@ -484,7 +489,34 @@ public class ConnectN {
      * @return true if all passed boards are the same
      */
     public static boolean compareBoards(final ConnectN...boards) {
-        return null;
+
+        for (int i = 0; i < boards.length - 1; i++) {
+            if (boards[i] == null || boards[i + 1] == null) {
+                return false;
+            }
+            if (boards[i].width != boards[i + 1].width
+                    || boards[i].height != boards[i + 1].height) {
+                return false;
+            }
+            if (boards[i].n != boards[i + 1].n) {
+                return false;
+            }
+            for (int y = 0; y < boards[i].height; y++) {
+                for (int x = 0; x < boards[i].width; x++) {
+                    Player first = boards[i].board[x][y];
+                    Player second = boards[i + 1].board[x][y];
+                    if (first == null && second == null) {
+                        continue;
+                    } else if (first == null || second == null) {
+                        return false;
+                    } else if (!first.equals(second)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+
     }
 
 /**
@@ -500,18 +532,24 @@ public class ConnectN {
 
 /**
  * Define equality for the ConnectN class.
+ *
+ * @param obj another object of the class to test equality
  */
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         ConnectN other = (ConnectN) obj;
-        if (id != other.id)
+        if (id != other.id) {
             return false;
+        }
         return true;
     }
 
