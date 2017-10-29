@@ -246,11 +246,15 @@ public class ConnectN {
      * @return the new ConnectN board or null
      */
     public static ConnectN create(final int width, final int height, final int n) {
+        int max = height;
+        if (width > height) {
+            max = width;
+        }
         if (width < MIN_WIDTH || width > MAX_WIDTH) {
             return null;
         } else if (height < MIN_HEIGHT || height > MAX_HEIGHT) {
             return null;
-        } else if (n < MIN_N) {
+        } else if (n < MIN_N || n >= max) {
             return null;
         } else {
             ConnectN newBoard = new ConnectN(width, height, n);
@@ -302,7 +306,7 @@ public class ConnectN {
             if (nextY == -1 && board[setX][0] == null) {
                 nextY = 0;
             }
-            if (nextY == setY) {
+            if (nextY == setY && board[setX][setY] == null) {
                 board[setX][setY] = player;
                 return true;
             }
@@ -454,7 +458,23 @@ public class ConnectN {
      * @return true if both the boards are the same
      */
     public static boolean compareBoards(final ConnectN firstBoard, final ConnectN secondBoard) {
-        return null;
+
+        if (firstBoard.width != secondBoard.width || firstBoard.height != secondBoard.height) {
+            return false;
+        }
+        if (firstBoard.n != secondBoard.n) {
+            return false;
+        }
+        for (int y = 0; y < firstBoard.height; y++) {
+            for (int x = 0; x < firstBoard.width; x++) {
+                Player first = firstBoard.board[x][y];
+                Player second = secondBoard.board[x][y];
+                if (!first.Player.equals(second)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
@@ -467,25 +487,32 @@ public class ConnectN {
         return null;
     }
 
-
-    /**
-     * Defines the hash code for the ConnectN class.
-     *
-     * @return an int
-     */
-    public final int hashCode() {
-        return null;
+/**
+ * Define the hash code for the ConnectN class.
+ */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
     }
 
-
-    /**
-     * Defines equality for the ConnectN class.
-     *
-     *@param obj no clue
-     * @return true if two ConnectN boards are equal
-     */
-    public boolean equals(final java.lang.Object obj) {
-        return null;
+/**
+ * Define equality for the ConnectN class.
+ */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ConnectN other = (ConnectN) obj;
+        if (id != other.id)
+            return false;
+        return true;
     }
 
     /**
