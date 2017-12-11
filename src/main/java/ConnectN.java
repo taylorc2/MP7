@@ -296,18 +296,21 @@ public class ConnectN {
         if (gameEnded()) {
             return false;
         }
-        if (0 <= setX && setX < width && 0 <= setY && setY < height && board[setX][setY] == null) {
-            for (int i = 0; i < height; i++) {
-                if (board[setX][i] != null) {
-                    nextY = i + 1;
+        if (whosTurn() == null || (player.getName()).equals(whosTurn())) {
+            if (0 <= setX && setX < width && 0 <= setY
+                    && setY < height && board[setX][setY] == null) {
+                for (int i = 0; i < height; i++) {
+                    if (board[setX][i] != null) {
+                        nextY = i + 1;
+                    }
                 }
-            }
-            if (nextY == -1 && board[setX][0] == null) {
-                nextY = 0;
-            }
-            if (nextY == setY && board[setX][setY] == null) {
-                board[setX][setY] = player;
-                return true;
+                if (nextY == -1 && board[setX][0] == null) {
+                    nextY = 0;
+                }
+                if (nextY == setY && board[setX][setY] == null) {
+                    board[setX][setY] = player;
+                    return true;
+                }
             }
         }
         return false;
@@ -325,15 +328,17 @@ public class ConnectN {
         if (gameEnded()) {
             return false;
         }
-        if (0 <= setX && setX < width) {
-            for (int i = 0; i < height; i++) {
-                if (board[setX][i] == null) {
-                    nextY = i;
-                    board[setX][nextY] = player;
-                    return true;
+        if (whosTurn() == null || (player.getName()).equals(whosTurn())) {
+            if (0 <= setX && setX < width) {
+                for (int i = 0; i < height; i++) {
+                    if (board[setX][i] == null) {
+                        nextY = i;
+                        board[setX][nextY] = player;
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
         }
         return false;
 
@@ -396,6 +401,16 @@ public class ConnectN {
     public Player getWinner() {
 
         if (gameStarted()) {
+            Player diaR = rightDia();
+            Player diaL = leftDia();
+            if (diaR != null) {
+                diaR.addScore();
+                return diaR;
+            }
+            if (diaL != null) {
+                diaL.addScore();
+                return diaL;
+            }
             int streak = 0;
             String lastPlayer = "";
             String p1;
@@ -596,6 +611,12 @@ public class ConnectN {
     public boolean hasWinner() {
 
         if (gameStarted()) {
+            if (rightDia() != null) {
+                return true;
+            }
+            if (leftDia() != null) {
+                return true;
+            }
             int streak = 0;
             String lastPlayer = "";
             String p1;
@@ -645,5 +666,106 @@ public class ConnectN {
         return false;
 
     }
+
+
+    /**
+     * Determines who's turn it is to play.
+     *
+     * @return name of the player who's turn it is
+     */
+    public String whosTurn() {
+        int p1Turns = 0;
+        int p2Turns = 0;
+        String p1 = "";
+        String p2 = "";
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Player current = board[x][y];
+                if (current == null) {
+                    continue;
+                } else {
+                    if (p1.equals("")) {
+                        if (p2.equals("")) {
+                            p2 = current.getName();
+                            p2Turns++;
+                        } else if (p2.equals(current.getName())) {
+                            p2Turns++;
+                        } else {
+                            p1 = (current).getName();
+                            p1Turns++;
+                        }
+                    } else if (p2.equals("")) {
+                        if ((current.getName()).equals(p1)) {
+                            p1Turns++;
+                        } else {
+                            p2 = current.getName();
+                            p2Turns++;
+                        }
+                    } else {
+                        if ((current.getName()).equals(p1)) {
+                            p1Turns++;
+                        } else if (current.getName().equals(p2)) {
+                        p2Turns++;
+                        }
+                    }
+                }
+            }
+        } //FOR LOOPS OVER
+        if (!p1.equals("") && !p2.equals("")) {
+            if (p2Turns > p1Turns) {
+                return p1;
+            }
+            return p2;
+        }
+
+        return null;
+    }
+
+
+    /**
+     * Determines which player (if any) has won on a positive slope.
+     *
+     * @return the player that won, null if n/a
+     */
+    public Player rightDia() {
+        for (int row = 0; row < height - n + 1; row++) {
+            for (int column = 0; column < width - n + 1; column++) {
+              if (board[column][row] != null && board[column + 1][row + 1] != null
+                      && board[column + 2][row + 2] != null
+                      && board[column + 3][row + 3] != null) {
+
+                   if ( board[column + 1][row + 1].equals(board[column][row])
+                           && board[column + 2][row + 2].equals(board[column][row]) &&
+                   board[column + 3][row + 3].equals(board[column][row])) {
+                              return board[column][row];
+                              }
+              }
+         }
+       }
+        return null;
+    }
+    /**
+     * Determines which player (if any) has won on a negative slope.
+     *
+     * @return the player that won, null if n/a
+     */
+    public Player leftDia() {
+        for (int row = n - 1; row < height; row++) {
+            for (int column = 0; column < width - n + 1; column++) {
+                if (board[column][row] != null && board[column + 1][row - 1] != null
+                        && board[column + 2][row - 2] != null
+                        && board[column + 3][row - 3] != null) {
+                    if(board[column + 1][row - 1].equals(board[column][row])
+                            && board[column + 2][row - 2].equals(board[column][row])
+                        && board[column + 3][row - 3].equals(board[column][row])){
+                        return board[column][row];
+                   }
+                }
+            }
+        }
+        return null;
+    }
+
 
 }

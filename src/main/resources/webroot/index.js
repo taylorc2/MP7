@@ -50,7 +50,7 @@ function newBoard() {
     board = JSON.parse(data.board);
     $(".tile").attr("draggable", "true");
     $("#reset").css("visibility", "hidden");
-    message("Drag an animal to the bottom of the board to start...", "success");
+    message("Drag a tile to the bottom of the board to start...", "success");
     updateBoard();
   });
 }
@@ -156,10 +156,10 @@ function newPlayer(whichPlayer, name) {
     players[whichPlayer] = player;
     selectorsByPlayerID[player.id] = whichPlayer;
     playersByID[player.id] = player;
-    if (name === "Chuchu") {
-      imagesByID[player.id] = "img/Chuchu.png";
-    } else if (name === "Xyz") {
-      imagesByID[player.id] = "img/Xyz.png";
+    if (name === "Blue") {
+      imagesByID[player.id] = "img/blue.png";
+    } else if (name === "Red") {
+      imagesByID[player.id] = "img/red.png";
     }
   });
 }
@@ -237,8 +237,8 @@ $(function () {
    * Set up the new board and create our two animal players.
    */
   newBoard()
-    .then(newPlayer("firstPlayer", "Chuchu"))
-    .then(newPlayer("secondPlayer", "Xyz"));
+    .then(newPlayer("firstPlayer", "Blue"))
+    .then(newPlayer("secondPlayer", "Red"));
 });
 
 
